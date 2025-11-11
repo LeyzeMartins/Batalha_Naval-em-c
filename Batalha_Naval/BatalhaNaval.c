@@ -26,7 +26,7 @@ int main() {
     do {
         // --- O Menu (Versão "bonita" com emojis) ---
         printf("\n\n=======================================\n");
-        printf(" 🚢 MEU JOGO DE BATALHA NAVAL (MESTRE) 🚢\n");
+        printf(" 🚢  JOGO DE BATALHA NAVAL (MESTRE) 🚢\n");
         printf("=======================================\n");
         printf("Escolha uma Habilidade para testar:\n\n");
         printf("  1. 🎯 Habilidade em CONE\n");
