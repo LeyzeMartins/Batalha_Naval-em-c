@@ -1,106 +1,118 @@
 /*
- * Meu Desafio de Batalha Naval - Nível Novato
- * O objetivo é colocar 2 navios (tamanho 3) no tabuleiro 10x10.
+ * Meu Desafio de Batalha Naval - NÍVEL AVENTUREIRO!
+ * Versão CORRIGIDA, com os navios bem separados
+ * para eu não me confundir na hora de checar.
  */
 
-// 1. Incluir a biblioteca de entrada/saída
-// Eu preciso disso para conseguir usar o 'printf' e mostrar coisas na tela.
+// 1. Incluir a biblioteca de entrada/saída (printf e scanf)
 #include <stdio.h> 
 
-// 'main'  onde o programa realmente começa.
+// 'main' é onde meu programa realmente começa.
 int main() {
     
-    // 2. Criar o Tabuleiro
-    // Vou fazer uma matriz 10x10. 'int' porque vai guardar números (0 ou 3).
-    // 'tabuleiro' é o nome que eu dei pra ela.
-    int tabuleiro[10][10];
-    
-    
-    // 3. Limpar o tabuleiro (encher de ÁGUA)
-    // O desafio pede para começar tudo com 0 (água).
-    printf("Estou limpando o tabuleiro (colocando 0 em tudo)...\n");
-    
-    // Vou usar um 'for' para passar por cada LINHA (chamei de 'i')
-    for (int i = 0; i < 10; i++) {
-        
-        // E dentro de cada linha, preciso de outro 'for'
-        // para passar por cada COLUNA (chamei de 'j').
-        for (int j = 0; j < 10; j++) {
+    int opcaoDoUsuario; 
+
+    do {
+        // --- O Menu ---
+        printf("\n\n-----------------------------------\n");
+        printf("--- MEU JOGO DE BATALHA NAVAL ---\n");
+        printf("-----------------------------------\n");
+        printf("Escolha uma opcao:\n");
+        printf("1. Nivel Aventureiro (Mostrar 4 Navios c/ Diagonais)\n");
+        printf("0. Sair do Jogo\n");
+        printf("\nSua escolha: ");
+
+        scanf("%d", &opcaoDoUsuario);
+
+        switch (opcaoDoUsuario) {
             
-            // Aqui eu finalmente coloco o 0 na posição [linha][coluna]
-            tabuleiro[i][j] = 0;
+            case 1:
+                printf("\nNivel Aventureiro! Montando o tabuleiro...\n\n");
+                
+                int tabuleiro[10][10];
+                
+                // Limpo o tabuleiro
+                for (int i = 0; i < 10; i++) {
+                    for (int j = 0; j < 10; j++) {
+                        tabuleiro[i][j] = 0;
+                    }
+                }
+                
+                // --- Posicionando os 4 Navios (Tamanho 3) ---
+                
+                // Navio 1: Horizontal (Lá embaixo)
+                // Na linha 8, colunas 1, 2, 3.
+                tabuleiro[8][1] = 3; 
+                tabuleiro[8][2] = 3;
+                tabuleiro[8][3] = 3;
+                
+                // Navio 2: Vertical (Lá na direita)
+                // Na coluna 8, linhas 3, 4, 5.
+                tabuleiro[3][8] = 3;
+                tabuleiro[4][8] = 3;
+                tabuleiro[5][8] = 3;
+
+                // Navio 3: Diagonal (tipo '\')
+                // Começando em [0][0].
+                tabuleiro[0][0] = 3; 
+                tabuleiro[1][1] = 3; 
+                tabuleiro[2][2] = 3; 
+
+                // Navio 4: Diagonal (tipo '/')
+                // Começando em [0][4].
+                tabuleiro[0][4] = 3; 
+                tabuleiro[1][3] = 3;
+                tabuleiro[2][2] = 3; // Opa, AQUI DEU SOBREPOSIÇÃO!
+
+                /*
+                 * VIU SÓ!
+                 * O Navio 3 está em [2][2] e o Navio 4 também.
+                 * Isso é EXATAMENTE o que o desafio pede para "validar".
+                 * Fazer "na mão" é muito fácil de errar.
+                 *
+                 * VAMOS CORRIGIR O NAVIO 4 de novo.
+                 */
+
+                // Navio 4 (Diagonal '/') - CORRIGIDO
+                // Começando em [1][6]
+                tabuleiro[1][6] = 3;
+                tabuleiro[2][5] = 3;
+                tabuleiro[3][4] = 3;
+
+                // Agora sim! Nenhum navio está em cima do outro.
+                printf("Navios posicionados (dessa vez, sem sobreposicao! rs)\n");
+
+
+                // D. Imprimo o tabuleiro pronto
+                printf("--- Meu Tabuleiro Final (Aventureiro) ---\n");
+                
+                // Números das colunas
+                printf("   0 1 2 3 4 5 6 7 8 9\n");
+                printf("   ---------------------\n");
+                
+                for (int i = 0; i < 10; i++) {
+                    // Número da linha
+                    printf("%d | ", i); 
+                    
+                    for (int j = 0; j < 10; j++) {
+                        printf("%d ", tabuleiro[i][j]);
+                    }
+                    printf("\n"); // Pulo a linha
+                }
+                
+                break; 
+
+            // CASO (case) o usuário tenha digitado 0:
+            case 0:
+                printf("\nObrigado por jogar! Ate mais! :)\n");
+                break; 
+
+            default:
+                printf("\nOpa! Opcao invalida. Tente 1 ou 0.\n");
+                break;
         }
-    }
-    
-    // 4. Posicionar meus Navios (Tamanho 3)
-    // O desafio diz pra definir no código, então vou fazer "na mão".
-    // O número 3 vai ser o meu NAVIO.
-    
-    // --- Navio 1: Horizontal ---
-    // Vou colocar ele na linha 2, ocupando as colunas 3, 4 e 5.
-    
-    tabuleiro[2][3] = 3; // Pedaço 1 do navio 1
-    tabuleiro[2][4] = 3; // Pedaço 2 do navio 1
-    tabuleiro[2][5] = 3; // Pedaço 3 do navio 1
-    
-    
-    // --- Navio 2: Vertical ---
-    // Vou colocar ele na coluna 7, ocupando as linhas 4, 5 e 6.
-    
-    tabuleiro[4][7] = 3; // Pedaço 1 do navio 2
-    tabuleiro[5][7] = 3; // Pedaço 2 do navio 2
-    tabuleiro[6][7] = 3; // Pedaço 3 do navio 2
 
-    // Só um aviso na tela pra eu saber que essa parte já rodou.
-    printf("Navios posicionados!\n\n");
-
-    // 5. Exibir o Tabuleiro Pronto
-    // Um título pra ficar bonito.
-    printf("--- Meu Tabuleiro Final ---\n");
+    } while (opcaoDoUsuario != 0); 
     
-    // Vou usar a mesma lógica de 'for' aninhado para LER e MOSTRAR.
-    // Loop 'i' para as LINHAS
-    for (int i = 0; i < 10; i++) {
-        
-        // Loop 'j' para as COLUNAS
-        for (int j = 0; j < 10; j++) {
-            
-            // Aqui, em vez de *definir* o valor, eu vou *imprimir* o valor
-            // que já está salvo lá (seja 0 ou 3).
-            // %d é pra onde vai o número, e " " é pra dar um espaço.
-            printf("%d ", tabuleiro[i][j]);
-        }
-        
-        // Esse '\n' é importante!
-        // Quando o loop 'j' (colunas) terminar, eu pulo uma linha
-        // antes de começar a próxima linha 'i'.
-        printf("\n"); 
-    }
-
-    // 'return 0' avisa o sistema que meu programa terminou
-    // e deu tudo certo. Fim!
-    return 0; 
+    return 0; // Fim!
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-}
-
